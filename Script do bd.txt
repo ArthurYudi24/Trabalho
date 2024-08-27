@@ -1,0 +1,56 @@
+CREATE DATABASE Loja
+
+
+
+USE Loja
+
+
+CREATE TABLE CLientes(
+cliente_id INT PRIMARY KEY,
+nome VARCHAR(30),
+idade VARCHAR(30),
+CPF INT,
+email VARCHAR(30),
+senha VARCHAR(30),
+)
+
+CREATE TABLE camisas_time (
+camisas_id INT PRIMARY KEY,
+nome_time VARCHAR(30),
+tamanho VARCHAR(30),
+valor DECIMAL(10,2),
+)
+
+CREATE TABLE Menu_carrinho (
+carrinho_id INT PRIMARY KEY,
+cliente_id INT,
+camisas_id INT,
+quantidade INT,
+FOREIGN KEY (cliente_id) REFERENCES Clientes (cliente_id),
+FOREIGN KEY (camisas_id) REFERENCES camisas_time (camisas_id)
+)
+
+CREATE TABLE Historico_compras (
+compra_id INT PRIMARY KEY,
+cliente_id INT,
+camisas_id INT,
+valor DECIMAL(10,2)
+FOREIGN KEY (cliente_id) REFERENCES Clientes (cliente_id),
+FOREIGN KEY (camisas_id) REFERENCES camisas_time (camisas_id)
+)
+
+CREATE TABLE Pagamentos (
+carrinho_id INT,
+cartão_crédito VARCHAR(30),
+cartão_débito VARCHAR(30),
+dinheiro INT,
+Pix INT,
+FOREIGN KEY (carrinho_id) REFERENCES Menu_carrinho(carrinho_id)
+)
+
+
+ALTER TABLE Pagamentos
+ADD CONSTRAINT fk_carrinho_id
+FOREIGN KEY (carrinho_id) REFERENCES Menu_carrinho(carrinho_id);
+
+DROP TABLE PAGAMENTOS
